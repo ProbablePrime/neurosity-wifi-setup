@@ -9,7 +9,7 @@ export function createObservableHelper(target) {
         },
         unsubscribeAll() {
             subscriptions.forEach(sub => sub.unsubscribe());
-            subscriptions = [];
+            subscriptions.length = 0;
         }
     };
 }
