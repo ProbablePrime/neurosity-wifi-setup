@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neurosity Test</title>
+</head>
+<body x-data="$store.neurosity">
+    <div id="app">
+        <h2>1. Neurosity Login</h2>
+        <div x-show="!authenticated">
+            <form @submit.prevent="login()">
+                <input type="email" x-model="email" placeholder="Email" required>
+                <input type="password" x-model="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div x-show="authenticated">
+            <p>Currently signed in as: <span x-text="username"></span></p>
+        </div>
+
+        <h2>2. Connect Bluetooth</h2>
+        <button @click="connect()">
+        Connect Bluetooth
+        </button>
+
+        <h2>3. WiFi Connection</h2>
+        <form @submit.prevent="wifiConnect()">
+            <input type="text" x-model="ssid" placeholder="SSID" required>
+            <input type="password" x-model="wifiPassword" placeholder="Password" required>
+            <button type="submit">Connect WiFi</button>
+        </form>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
