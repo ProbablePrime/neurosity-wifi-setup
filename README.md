@@ -1,12 +1,12 @@
 # Neurosity Wifi Setup
 
 Unfortunately the neurosity app, doesn't work on my phone:
-![alt text](image.png)
+![alt text](docs/image.png)
 
 My phone is quite new, so this is probably just a Google App Store thing. 
 
 Some users in supported reported the same issue:
-![alt text](image-1.png)
+![alt text](docs/image-1.png)
 
 I was annoyed, so I wrote this app to fix this.
 
@@ -14,7 +14,6 @@ I was annoyed, so I wrote this app to fix this.
 The regular neurosity client, exposes a set of [wifi related BT operations](https://github.com/neurosity/neurosity-sdk-js/blob/master/src/api/bluetooth/BluetoothClient.ts#L395).
 
 This app uses those.
-
 
 ## Setup
 1. Git Clone
@@ -33,7 +32,6 @@ Open the web console, to double check stuff. You should see a success.
     - Maybe: https://github.com/glhd/alpine-wizard
 2. Wifi Management - Forget/add other networks
 3. Deployment - something like neurositywifi.probableprime.co.uk.
-
 
 ## Technologies
 1. Alpine JS
