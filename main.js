@@ -17,4 +17,5 @@ const neurosityStore = createNeurosityAlpine(neurosity);
 Alpine.store('neurosity', neurosityStore);
 
 window.Alpine = Alpine
+window.neurosity = neurosity;
 Alpine.start()

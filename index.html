@@ -20,9 +20,14 @@
         </div>
 
         <h2>2. Connect Bluetooth</h2>
-        <button @click="connect()">
-        Connect Bluetooth
-        </button>
+        <div x-show="!bluetooth">
+            <button @click="connect()">
+            Connect Bluetooth
+            </button>
+        </div>
+        <div x-show="bluetooth">
+            <p x-text="state"></p>
+        </div>
 
         <h2>3. WiFi Connection</h2>
         <form @submit.prevent="wifiConnect()">
