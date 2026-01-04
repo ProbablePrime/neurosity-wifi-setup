@@ -1,11 +1,13 @@
 # Neurosity Wifi Setup
 
 Unfortunately the neurosity app, doesn't work on my phone:
+
 ![alt text](docs/image.png)
 
 My phone is quite new, so this is probably just a Google App Store thing. 
 
 Some users in supported reported the same issue:
+
 ![alt text](docs/image-1.png)
 
 I was annoyed, so I wrote this app to fix this.
