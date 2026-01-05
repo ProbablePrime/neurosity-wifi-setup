@@ -35,14 +35,14 @@
         <h2>3. Device Claim</h2>
         <div x-show="!deviceClaimed">
             <p>Claim your device to account: <span x-text="username"></span></p>
-            <button @click="connect()">
+            <button @click="claimDevice(deviceId)">
             Claim Device
             </button>
         </div>
         <div x-show="deviceClaimed">
             <p>Release your device from account: <span x-text="username"></span></p>
             <p>Another user will be able to claim it later.</p>
-            <button @click="connect()">
+            <button @click="releaseDevice(deviceId)">
             Release Device
             </button>
         </div>
@@ -56,7 +56,7 @@
         </form>
         <div x-show="done">
             <h2>5. Done</h2>
-            <p>Your crown is registered to your account, connected to wifi and ready to go. Checkout the <a href="https://console.neurosity.co/login">Neurosity Console</a> for additional options.
+            <p>✅ Your crown is registered to your account, connected to wifi and ready to go. Checkout the <a href="https://console.neurosity.co/login">Neurosity Console</a> for additional options.
             </p>
         </div>
     </div>

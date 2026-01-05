@@ -52,6 +52,10 @@ export function createNeurosityAlpine(client, Alpine) {
                 }
             });
 
+            Alpine.effect(() => {
+                this.done = this.bluetooth && this.deviceClaimed && this.authenticated;
+            });
+
             Alpine.effect(async () => {
                 if (this.deviceId === ''){
                     this.deviceClaimed = false;
