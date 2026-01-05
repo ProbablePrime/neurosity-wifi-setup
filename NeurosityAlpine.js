@@ -1,25 +1,34 @@
-import { createObservableHelper } from './ObservableHelper'
+import { createObservableHelper } from './ObservableHelper';
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const LOG_NETWORKS = false;
 // Abstracts neurosity stuff from alpine
 /**
  * @param {Neurosity} client
+ * @param {Alpine} Alpine
  */
-export function createNeurosityAlpine(client) {
+export function createNeurosityAlpine(client, Alpine) {
     var helper;
     return {
         client,
 
         email: '',
         password: '',
+        authenticated: false,
+        user: null,
 
         ssid: '',
         wifiPassword: '',
+        wifiConnected: false,
 
-        authenticated: false,
-        user: null,
         state: '',
         bluetooth: false,
+
+        deviceId: '',
+        deviceClaimed: false,
+
+        done: false,
 
         init() {
             helper = createObservableHelper(this);
@@ -33,7 +42,26 @@ export function createNeurosityAlpine(client) {
             helper.subscribe(this.client.streamingState(), 'state', state => `Mode: ${state.streamingMode}. activeMode: ${state.activeMode}, connected: ${state.connected}`);
             helper.subscribe(this.client.streamingState(), 'bluetooth', state => state.activeMode == 'bluetooth');
 
-            // Disable by default due to security/console spam
+            Alpine.effect(async () => {
+                if (this.bluetooth && this.deviceId === '') {
+                    await sleep(1000); //TODO: there's a race condition on connection, because the SDK is already requesting this information
+                    var id = await this.client.bluetooth.getDeviceId();
+                    this.deviceId = id;
+                } else if(!this.bluetooth) {
+                    this.deviceId = '';
+                }
+            });
+
+            Alpine.effect(async () => {
+                if (this.deviceId === ''){
+                    this.deviceClaimed = false;
+                    return;
+                }
+                var res = await this.hasDevice(this.deviceId);
+
+                this.deviceClaimed = res;
+            });
+
             if (LOG_NETWORKS)
             {
                 this.client.bluetooth.wifi.nearbyNetworks().subscribe(a => console.log(a)); 
@@ -42,16 +70,6 @@ export function createNeurosityAlpine(client) {
 
         login() {
             return this.client.login({ email: this.email, password: this.password });
-        },
-
-        async hasDevice(deviceId) {
-            var devices = await this.client.getDevices();
-            var found = devices.some(device => device.deviceId);
-            return found;
-        },
-
-        async claimDevice(deviceId) {
-            this.client.claimDevice(deviceId);
         },
 
         connect() {
@@ -68,6 +86,18 @@ export function createNeurosityAlpine(client) {
                 return this.user.email;
             else
                 return "Not Signed in";
+        },
+
+        async hasDevice(deviceId) {
+            var devices = await this.client.getDevices();
+            return devices.some(device => device.deviceId === deviceId);
+        },
+
+        async claimDevice(deviceId) {
+            return this.client.claimDevice(deviceId);
+        },
+        async releaseDevice(deviceId) {
+            return this.client.releaseDevice(deviceId);
         }
     };
 }

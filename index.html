@@ -29,14 +29,36 @@
         </div>
         <div x-show="bluetooth">
             <p x-text="state"></p>
+            <p>Connected device ID: <span x-text="deviceId"></span></p>
         </div>
 
-        <h2>3. WiFi Connection</h2>
+        <h2>3. Device Claim</h2>
+        <div x-show="!deviceClaimed">
+            <p>Claim your device to account: <span x-text="username"></span></p>
+            <button @click="connect()">
+            Claim Device
+            </button>
+        </div>
+        <div x-show="deviceClaimed">
+            <p>Release your device from account: <span x-text="username"></span></p>
+            <p>Another user will be able to claim it later.</p>
+            <button @click="connect()">
+            Release Device
+            </button>
+        </div>
+        <p>Device Claimed: <span x-text="deviceClaimed"></span></p>
+
+        <h2>4. WiFi Connection</h2>
         <form @submit.prevent="wifiConnect()">
             <input type="text" x-model="ssid" placeholder="SSID" required>
             <input type="password" x-model="wifiPassword" placeholder="Password" required>
             <button type="submit">Connect WiFi</button>
         </form>
+        <div x-show="done">
+            <h2>5. Done</h2>
+            <p>Your crown is registered to your account, connected to wifi and ready to go. Checkout the <a href="https://console.neurosity.co/login">Neurosity Console</a> for additional options.
+            </p>
+        </div>
     </div>
     <script type="module" src="/main.js"></script>
 </body>

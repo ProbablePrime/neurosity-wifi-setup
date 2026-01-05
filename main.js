@@ -13,9 +13,9 @@ export const neurosity = new Neurosity({
 
 neurosity.bluetooth.logs().subscribe(msg => console.log(msg));
 
-const neurosityStore = createNeurosityAlpine(neurosity);
+const neurosityStore = createNeurosityAlpine(neurosity, Alpine);
 Alpine.store('neurosity', neurosityStore);
-
+//neurosity.bluetooth.deviceInfo
 window.Alpine = Alpine
 window.neurosity = neurosity;
 Alpine.start()
